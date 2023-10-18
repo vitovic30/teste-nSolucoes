@@ -22,4 +22,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 Route::group(['prefix' => 'v1', 'middleware' => ValidateToken::class], function() {
     Route::apiResource('clients', ClientController::class)->only(['index', 'store']);
+    Route::post('clients/charges', [ClientController::class, 'charge']);
 });

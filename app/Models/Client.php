@@ -18,7 +18,8 @@ class Client extends Model
         'cpf',
         'data_nascimento',
         'user_id',
-        'endereco_id'
+        'endereco_id',
+        'codigo_cus'
     ];
 
     public function user(): HasOne
