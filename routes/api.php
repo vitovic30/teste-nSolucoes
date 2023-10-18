@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Middleware\ValidateToken;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group(['prefix' => 'v1', 'middleware' => ValidateToken::class], function() {
-    Route::get('/products', function() {
-        return 1;
-    });
+    Route::apiResource('clients', ClientController::class)->only(['index', 'store']);
 });

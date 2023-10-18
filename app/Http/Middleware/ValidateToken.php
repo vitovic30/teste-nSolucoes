@@ -20,7 +20,6 @@ class ValidateToken
         $user = User::find(1);
 
         if (array_key_exists('authorization', $headers)) {
-            return $next($request);
             if ($user->getAccessToken($headers['authorization'][0])) {
                 return $next($request);
             } else {
