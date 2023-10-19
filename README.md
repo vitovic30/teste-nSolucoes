@@ -8,7 +8,8 @@ de cartao de credito entre outros.
 
 `Steps project`
 
-1- Composer install
-2- php artisan migrate
-3- php artisan db:seed
-4- php artisan serve.
+Commands:
+- `install`: composer install
+- `migrations`: php artisan migrate
+- `seeds`: php artisan db:seed
+- `serve`: php artisan serve
