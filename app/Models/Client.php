@@ -21,7 +21,8 @@ class Client extends Model
         'endereco_id',
         'codigo_cus',
         'forma_pagamento_id',
-        'charge_id'
+        'charge_id',
+        'product_id'
     ];
 
     public function user(): HasOne
@@ -42,5 +43,10 @@ class Client extends Model
     public function charge(): HasMany
     {
         return $this->hasMany(Charge::class);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }

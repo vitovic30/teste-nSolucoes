@@ -6,6 +6,7 @@ use App\Http\Requests\ChargeRequest;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\FormaPagamentoRequest;
 use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\Client as ResourcesClient;
 use App\Http\Services\AssasSandbox;
 use App\Models\Charge;
@@ -144,6 +145,22 @@ class ClientController extends Controller
 
             return response()->json(['message' => 'Pagamento aprovado'], 200);
 
+        } catch (\Throwable $th) {
+            return response()->json([
+                'data' => null,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function purchase(PurchaseRequest $request)
+    {
+        try {
+            $data = $request->validated();
+
+            Client::where('id', $data['client_id'])->update(['product_id' => $data['product_id']]);
+
+            return response()->json(['message' => 'Produto favoritado com sucesso.']);
         } catch (\Throwable $th) {
             return response()->json([
                 'data' => null,
