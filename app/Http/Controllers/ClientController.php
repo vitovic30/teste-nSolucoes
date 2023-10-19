@@ -12,6 +12,7 @@ use App\Models\Charge;
 use App\Models\Client;
 use App\Models\Endereco;
 use App\Models\FormaPagamento;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {

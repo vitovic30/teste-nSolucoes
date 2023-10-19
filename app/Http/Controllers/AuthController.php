@@ -18,9 +18,12 @@ class AuthController extends Controller
             if ($user->exists()) {
                 $validUser = $user->first();
 
-                if (Hash::check($data['password'], $validUser->password)) {
+                if (Hash::check($data['password'], $validUser->password) &&
+                        Auth::attempt($request->only(['email', 'password']))) {
+
+                    Auth::login($validUser);
                     return response()->json([
-                        'access_token' => $validUser->createToken($validUser->name)->accessToken->token,
+                        'access_token' => $validUser->createToken('Personal Access Token')->plainTextToken,
                         'user' => $user->select('name', 'email')->first(),
                         'roles' => $validUser->roles()->get()->toArray()
                     ]);

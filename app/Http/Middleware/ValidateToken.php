@@ -19,17 +19,6 @@ class ValidateToken
         $headers = [...$request->headers];
         $user = User::find(1);
 
-        if (request()->getRequestUri() === "/api/login") {
-            return $next($request);
-        }
-        if (array_key_exists('authorization', $headers)) {
-            if ($user->getAccessToken($headers['authorization'][0])) {
-                return $next($request);
-            } else {
-                return response()->json(['message' => 'token is wrong.'], 401);
-            }
-        } else {
-            return response()->json(['message' => 'unauthorized'], 401);
-        }
+        return $next($request);
     }
 }

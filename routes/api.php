@@ -16,13 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::post('/login', [AuthController::class, 'login']);
-Route::group(['prefix' => 'v1', 'middleware' => ValidateToken::class], function() {
-    Route::apiResource('clients', ClientController::class)->only(['index', 'store']);
-    Route::post('clients/charges', [ClientController::class, 'charge']);
-    Route::post('clients/forma-pagamento', [ClientController::class, 'formaPagamento']);
-    Route::post('clients/payment', [ClientController::class, 'payment']);
+
+Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function() {
+    Route::group(['middleware' => 'role_or_permission:admin'], function () {
+        Route::get('clients', [ClientController::class, 'index']);
+        Route::post('clients', [ClientController::class, 'store']);
+    });
+    Route::group(['middleware' => 'role_or_permission:user'], function () {
+        Route::post('clients/charges', [ClientController::class, 'charge']);
+        Route::post('clients/forma-pagamento', [ClientController::class, 'formaPagamento']);
+        Route::post('clients/payment', [ClientController::class, 'payment']);
+    });
 });
