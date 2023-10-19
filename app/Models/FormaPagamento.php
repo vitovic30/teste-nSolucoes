@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Charge extends Model
+class FormaPagamento extends Model
 {
     use HasFactory;
 
+    protected $table = 'forma_pagamento';
     protected $fillable = [
         'id',
-        'codigo_cliente_cus',
-        'codigo_payment',
-        'descricao',
-        'forma_pagamento',
-        'value',
-        'data_vencimento',
-        'client_id'
+        'holder_name',
+        'number',
+        'expiry_month',
+        'expiry_year',
+        'ccv',
+        'credit_card_token',
+        'credit_card_brand',
+        'client_id',
     ];
 
     public function client(): BelongsTo

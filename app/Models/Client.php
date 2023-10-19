@@ -19,7 +19,9 @@ class Client extends Model
         'data_nascimento',
         'user_id',
         'endereco_id',
-        'codigo_cus'
+        'codigo_cus',
+        'forma_pagamento_id',
+        'charge_id'
     ];
 
     public function user(): HasOne
@@ -30,5 +32,15 @@ class Client extends Model
     public function endereco(): HasMany
     {
         return $this->hasMany(Endereco::class);
+    }
+
+    public function formaPagamento(): HasMany
+    {
+        return $this->hasMany(FormaPagamento::class);
+    }
+
+    public function charge(): HasMany
+    {
+        return $this->hasMany(Charge::class);
     }
 }

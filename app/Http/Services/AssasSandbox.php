@@ -52,6 +52,63 @@ class AssasSandbox {
 
         return json_decode($contents);
     }
+
+    public function tokenizacaoCreditCard(array $payload)
+    {
+        $payload = [
+            'creditCard' => [
+                'holderName' => $payload['credit_card']['holder_name'],
+                'number' => $payload['credit_card']['number'],
+                'expiryMonth' => $payload['credit_card']['expiry_month'],
+                'expiryYear' => $payload['credit_card']['expiry_year'],
+                'ccv' => $payload['credit_card']['ccv'],
+            ],
+            'creditCardHolderInfo' => [
+                'name' => $payload['credit_card_holder_info']['name'],
+                'email' => $payload['credit_card_holder_info']['email'],
+                'cpfCnpj' => $payload['credit_card_holder_info']['cpf_cnpj'],
+                'postalCode' => $payload['credit_card_holder_info']['postal_code'],
+                'addressNumber' => $payload['credit_card_holder_info']['address_number'],
+                'addressComplement' => $payload['credit_card_holder_info']['address_complement'] ?? null,
+                'phone' => $payload['credit_card_holder_info']['phone'],
+            ],
+            'customer' => $payload['customer'],
+        ];
+
+        $response = $this->client->request('POST', 'https://sandbox.asaas.com/api/v3/creditCard/tokenize', [
+            'body' => json_encode($payload),
+            'headers' => [
+                'accept' => 'application/json',
+                'access_token' => $this->access_token,
+                'content-type' => 'application/json',
+            ],
+        ]);
+
+        $contents = $response->getBody()->getContents();
+
+        return json_decode($contents);
+    }
+
+    public function payment(array $data)
+    {
+        $payload = [
+            'creditCardToken' => $data['token_card']
+        ];
+
+        $url = "https://sandbox.asaas.com/api/v3/payments/".$data['payment_id']."/payWithCreditCard";
+        $response = $this->client->request('POST', $url, [
+            'body' => json_encode($payload),
+            'headers' => [
+                'accept' => 'application/json',
+                'access_token' => $this->access_token,
+                'content-type' => 'application/json',
+            ],
+            ]);
+
+        $contents = $response->getBody()->getContents();
+
+        return json_decode($contents);
+    }
 }
 
 ?>

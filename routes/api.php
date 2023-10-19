@@ -23,4 +23,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['prefix' => 'v1', 'middleware' => ValidateToken::class], function() {
     Route::apiResource('clients', ClientController::class)->only(['index', 'store']);
     Route::post('clients/charges', [ClientController::class, 'charge']);
+    Route::post('clients/forma-pagamento', [ClientController::class, 'formaPagamento']);
+    Route::post('clients/payment', [ClientController::class, 'payment']);
 });

@@ -22,6 +22,7 @@ class Client extends ResourceCollection
                 'cpf' => $item['cpf'],
                 'data_nascimento' => $item['data_nascimento'],
                 'endereco' => $item['endereco'],
+                'payment_method' => $item['forma_pagamento'],
             ];
         });
     }
